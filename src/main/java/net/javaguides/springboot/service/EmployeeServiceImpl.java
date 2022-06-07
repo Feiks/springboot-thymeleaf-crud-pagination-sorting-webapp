@@ -54,4 +54,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 		return this.employeeRepository.findAll(pageable);
 	}
+
+	@Override
+	public List<Employee> listAll(String keyword) {
+		if (keyword != null) {
+			return employeeRepository.search(keyword);
+		}
+		return employeeRepository.findAll();	}
 }

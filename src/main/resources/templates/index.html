@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Employee Management System</title>
+<title>Payment Management System</title>
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -13,24 +13,86 @@
 <body>
 
 	<div class="container my-2">
-	<h1>Employees List</h1>
+	<h1>Admin Panel</h1>
 	
-	<a th:href = "@{/showNewEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
-	
+	<a th:href = "@{/showNewEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Make a Payment </a>
+		<a th:href = "@{/adminPanel}" class="btn btn-danger btn-sm mb-3"> Admin Panel </a>
+		<a th:href = "@{/takeMoney}" class="btn btn-danger btn-sm mb-3"> Get Payment </a>
+		<a th:href = "@{/logout}" class="btn btn-primary btn-sm mb-3"> Log out </a>
+
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+			<tr>
+				<th>
+					<a>Total taken in USD</a>
+				</th>
+				<th>
+					<a>Total taken in KGS</a>
+				</th>
+				<th>
+					<a>Total taken in EURO</a>
+				</th>
+
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td th:text="${totalAmount}"></td>
+				<td th:text="${totalAmount1}"></td>
+				<td th:text="${totalAmount2}"></td>
+			</tr>
+			</tbody>
+		</table>
+		<form th:action="@{/hm}" class = "table table-striped table-responsive-md">
+			Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" placeholder="Enter the code of the payment" />
+			&nbsp;
+			<input type="submit" value="Search" />
+			&nbsp;
+			<input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+		</form>
+		<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/}]]";
+    }
+</script>
+
+
+
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
-							Employee First Name</a>
+							First Name</a>
 					</th>
 					<th>
 					<a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
-							Employee Last Name</a>
+							Last Name</a>
 					</th>
 					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
-							Employee Email</a>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=amount&sortDir=' + ${reverseSortDir}}">
+							Amount</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=currency&sortDir=' + ${reverseSortDir}}">
+							Currency</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=code&sortDir=' + ${reverseSortDir}}">
+							Code</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=state&sortDir=' + ${reverseSortDir}}">
+							State</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=date&sortDir=' + ${reverseSortDir}}">
+							CreationDate</a>
+					</th>
+
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=userChangeBy&sortDir=' + ${reverseSortDir}}">
+							Updated By</a>
 					</th>
 					<th> Actions </th>
 				</tr>
@@ -39,20 +101,59 @@
 				<tr th:each="employee : ${listEmployees}">
 					<td th:text="${employee.firstName}"></td>
 					<td th:text="${employee.lastName}"></td>
-					<td th:text="${employee.email}"></td>
+					<td th:text="${employee.amount}"></td>
+					<td th:text="${employee.currency}"></td>
+					<td th:text="${employee.code}"></td>
+					<td th:text="${employee.state}"></td>
+					<td th:text="${employee.date}"></td>
+					<td th:text="${employee.userChangeBy}"></td>
+
+
+
 					<td> <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>
 					    <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger">Delete</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		
+
 		<div th:if = "${totalPages > 1}">
 			<div class = "row col-sm-10">
 				<div class = "col-sm-2">
-					Total Rows: [[${totalItems}]] 
+					Total Rows: [[${totalItems}]]
+						<select th:onchange="'window.location.href = \'' + @{ '/page/' + '?pageSize=\' + this.value '} ">
+							<option th:each="size : ${pageSize}" th:text=${size}  ></option>
+						<option value="0" selected="selected">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+					</select>
+
+
+
 				</div>
-				<div class = "col-sm-1">
+
+				<div class = "col-sm-2">
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
 						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
@@ -67,8 +168,28 @@
     				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
 					<span th:unless="${currentPage < totalPages}">Last</span>
    				 </div>
+
+				<div class = "col-sm-1">
+					<a  th:href="@{'/page/' + ${currentPage -currentPage+1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Start</a>
+
+				</div>
+
+
+
+
 			</div>
 		</div>
+
+		<div th:if="${bookPage.totalPages > 0}" class="pagination"
+			 th:each="pageNumber : ${pageNumbers}">
+			<a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
+			   th:text=${pageNumber}
+			   th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+		</div>
+
+
+		<div>
+	</div>
 	</div>
 </body>
 </html>

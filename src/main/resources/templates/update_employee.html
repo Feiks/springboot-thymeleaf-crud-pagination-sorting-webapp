@@ -13,7 +13,7 @@
 		<hr>
 		<h2>Update Employee</h2>
 
-		<form action="#" th:action="@{/saveEmployee}" th:object="${employee}"
+		<form action="#" th:action="@{/saveEmployee1}" th:object="${employee}"
 			method="POST">
 			
 			<!-- Add hidden form field to handle update -->
@@ -22,9 +22,16 @@
 			<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4">
 				
 				<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4">
-				
-				<input type="text" th:field="*{email}" class="form-control mb-4 col-4">
-				
+
+			<input type="text" th:field="*{amount}"
+				   placeholder="Amount" class="form-control mb-4 col-4">
+
+			<input type="text" th:field="*{currency}"
+				   placeholder="Currency" class="form-control mb-4 col-4">
+
+			<input type="text" th:field="*{code}"
+				   placeholder="Code" class="form-control mb-4 col-4">
+
 				<button type="submit" class="btn btn-info col-2"> Update Employee</button>
 		</form>
 		
